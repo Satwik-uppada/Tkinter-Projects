@@ -1,0 +1,197 @@
+import tkinter
+import customtkinter as ctk
+from tkinter import messagebox
+from PIL import ImageTk,Image
+
+app=ctk.CTk()
+app.title("E-mail Format Checker")
+ctk.set_appearance_mode("System")
+ctk.set_default_color_theme("blue")
+app.geometry("900x700")
+
+
+def validation():
+    email=Entry_text.get()
+    if (" " in email) == False:
+            if not email.islower():
+                messagebox.showerror("Result",message="Invalid")
+            else:
+                if ("@" in email) and (email.count("@") == 1):
+                    email_split = email.split("@")
+                    if len(email_split) == 2:
+                        username, domain = email_split
+                        if username.isalnum() == True:
+                            if username[0].isalpha() == True:
+                                if username[-1].isalnum() == True:
+                                    dot_commercial = domain.split(".")
+                                    if len(dot_commercial) == 2:
+                                        email_service, domain_name = dot_commercial
+                                        if len(domain_name) >= 2:
+                                            if email_service.isdigit() == False:
+                                                if email_service.isalpha() == True:
+                                                   result_screen=ctk.CTkFrame(app)
+                                                   result_screen.pack(padx=100, fill="x", pady=(55,25))
+                                                   label = ctk.CTkLabel(result_screen, text="Validation Report",font=("Brush Script MT", 35))
+                                                   label.pack(padx=10,pady=10)
+                                                   result = ctk.CTkTextbox(result_screen, font=ctk.CTkFont(size=15))
+                                                   result.pack(padx=15, fill="x", pady=(2,25))
+                                                   messagebox.showinfo("Result",message="Valid")
+                                                   parts =f"According to the syntactic rules of the target mail exchanger, the address is syntactically valid.\n\n"\
+                                                          f"Local part:    {username}\n" \
+                                                          f"\n" \
+                                                          f"Domain part:    {domain}\n" \
+                                                          f"\n" \
+                                                          f"Email service:    {email_service}\n" \
+                                                          f"\n" \
+                                                          f"Dot Commercial:    {domain_name}\n"
+
+                                                   result.insert("0.0",parts)
+                                                else:
+                                                    messagebox.showerror("Result", message="Invalid")
+                                            else:
+                                                messagebox.showerror("Result", message="Invalid")
+                                        else:
+                                            messagebox.showerror("Result", message="Invalid")
+                                    else:
+                                        messagebox.showerror("Result", message="Invalid")
+                                else:
+                                    messagebox.showerror("Result", message="Invalid")
+                            else:
+                                messagebox.showerror("Result", message="Invalid")
+                        elif (("." in username) or ("_" in username) or ("-" in username)):
+                            if username[-1].isalnum() and username[0].isalnum() == True:
+                                if "." in username:
+                                    first_name, last_name = username.split(".", 1)
+                                    if first_name[-1].isalnum() and last_name[0].isalnum() == True:
+                                        dot_commercial = domain.split(".")
+                                        if len(dot_commercial) == 2:
+                                            email_service, domain_name = dot_commercial
+                                            if len(domain_name) >= 2:
+                                                if email_service.isdigit() == False:
+                                                    if email_service.isalpha() == True:
+                                                        result = ctk.CTkTextbox(app, font=ctk.CTkFont(size=15))
+                                                        result.pack(padx=100, fill="x", pady=10)
+                                                        messagebox.showinfo("Result", message="Valid")
+                                                        parts = f"According to the syntactic rules of the target mail exchanger, the address is syntactically valid.\n\n"\
+                                                               f"Local part:    {username}\n" \
+                                                               f"\n" \
+                                                               f"Domain part:    {domain}\n" \
+                                                               f"\n" \
+                                                               f"Email service:    {email_service}\n" \
+                                                               f"\n" \
+                                                               f"Dot Commercial:    {domain_name}\n"
+
+                                                        result.insert("0.0", parts)
+                                                    else:
+                                                        messagebox.showerror("Result",message="Invalid")
+                                                else:
+                                                    messagebox.showerror("Result", message="Invalid")
+                                            else:
+                                                messagebox.showerror("Result", message="Invalid")
+                                        else:
+                                            messagebox.showerror("Result", message="Invalid")
+                                    elif (first_name[-1] or last_name[0] == (".") or ("_") or ("-")):
+                                        messagebox.showerror("Result", message="Invalid")
+                                    else:
+                                        messagebox.showerror("Result", message="Invalid")
+                                elif ("_" in username):
+                                    first_name, last_name = username.split("_", 1)
+                                    if first_name[-1].isalnum() and last_name[0].isalnum() == True:
+                                        dot_commercial = domain.split(".")
+                                        if len(dot_commercial) == 2:
+                                            email_service, domain_name = dot_commercial
+                                            if len(domain_name) >= 2:
+                                                if email_service.isdigit() == False:
+                                                    if email_service.isalpha() == True:
+                                                        result = ctk.CTkTextbox(app, font=ctk.CTkFont(size=15))
+                                                        result.pack(padx=100, fill="x", pady=10)
+                                                        messagebox.showinfo("Result", message="Valid")
+                                                        parts = f"According to the syntactic rules of the target mail exchanger, the address is syntactically valid.\n\n"\
+                                                               f"Local part:    {username}\n" \
+                                                               f"\n" \
+                                                               f"Domain part:    {domain}\n" \
+                                                               f"\n" \
+                                                               f"Email service:    {email_service}\n" \
+                                                               f"\n" \
+                                                               f"Dot Commercial:    {domain_name}\n"
+                                                        result.insert("0.0", parts)
+                                                    else:
+                                                        messagebox.showerror("Result", message="Invalid")
+                                                else:
+                                                    messagebox.showerror("Result", message="Invalid")
+                                            else:
+                                                messagebox.showerror("Result", message="Invalid")
+                                        else:
+                                            messagebox.showerror("Result", message="Invalid")
+                                    elif (first_name[-1] or last_name[0] == (".") or ("_") or ("-")):
+                                        messagebox.showerror("Result", message="Invalid")
+                                    else:
+                                        messagebox.showerror("Result", message="Invalid")
+                                elif "-" in username:
+                                    first_name, last_name = username.split("-", 1)
+                                    if first_name[-1].isalnum() and last_name[0].isalnum() == True:
+                                        dot_commercial = domain.split(".")
+                                        if len(dot_commercial) == 2:
+                                            email_service, domain_name = dot_commercial
+                                            if len(domain_name) >= 2:
+                                                if email_service.isdigit() == False:
+                                                    if email_service.isalpha() == True:
+                                                        result = ctk.CTkTextbox(app, font=ctk.CTkFont(size=15))
+                                                        result.pack(padx=100, fill="x", pady=10)
+                                                        messagebox.showinfo("Result", message="Valid")
+                                                        parts = f"According to the syntactic rules of the target mail exchanger, the address is syntactically valid.\n\n"\
+                                                               f"Local part:    {username}\n" \
+                                                               f"\n" \
+                                                               f"Domain part:    {domain}\n" \
+                                                               f"\n" \
+                                                               f"Email service:    {email_service}\n" \
+                                                               f"\n" \
+                                                               f"Dot Commercial:    {domain_name}\n"
+
+                                                        result.insert("0.0", parts)
+                                                    else:
+                                                        messagebox.showerror("Result", message="Invalid")
+                                                else:
+                                                    messagebox.showerror("Result", message="Invalid")
+                                            else:
+                                                messagebox.showerror("Result", message="Invalid")
+                                        else:
+                                            messagebox.showerror("Result", message="Invalid")
+                                    elif (first_name[-1] or last_name[0] == (".") or ("_") or ("-")):
+                                        messagebox.showerror("Result", message="Invalid")
+                                    else:
+                                        messagebox.showerror("Result", message="Invalid")
+                                else:
+                                    messagebox.showerror("Result", message="Invalid")
+                            else:
+                                return messagebox.showerror("Result",message="Invalid")
+                        else:
+                            return messagebox.showerror("Result",message="Invalid")
+                    else:
+                        messagebox.showerror("Result", message="Invalid")
+                else:
+                    messagebox.showerror("Result",message="Invalid")
+
+    else:
+        messagebox.showerror("Result", message="Invalid")
+
+title_label = ctk.CTkLabel(app, text="E-Mail address validator",font=ctk.CTkFont("Brush Script MT",size=50))
+title_label.pack(padx=10,pady=(40,20))
+
+frame=ctk.CTkFrame(app,height=700)
+frame.pack(fill="x",padx=100,pady=10)
+
+input_frame = ctk.CTkFrame(frame)
+input_frame.pack(padx=100,pady=(75,25),fill="both")
+
+Entry_label = ctk.CTkLabel(input_frame,text="Email: ",font=("Times New Roman",25))
+Entry_label.grid(row=0,column=3,padx=10,pady=10)
+Entry_text = ctk.CTkEntry(input_frame,height=10,width=380,font=("Times New Roman",25))
+Entry_text.grid(row=0,column=4,padx=10,pady=10)
+
+validate_btn=ctk.CTkButton(frame,text="Validate",font=("Brush Script MT",25),command=validation)
+validate_btn.pack(padx=10,pady=10)
+
+
+
+app.mainloop()
