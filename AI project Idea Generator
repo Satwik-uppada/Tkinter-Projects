@@ -1,0 +1,75 @@
+import os
+import openai
+import customtkinter as ctk
+
+
+def generate():
+    prompt="Please generate 20 ideas for coding projects.\n"
+    language = language_dropdown.get()
+    prompt +="The Programming language is "+ language + "."
+    level = level_value.get()
+    prompt += "The difficultyis "+level+"."
+    if checkbox1.get():
+        prompt += "The project should include a Database."
+    if checkbox2.get():
+        prompt += "The project should include API"
+    #print(prompt)
+
+    openai.api_key =os.getenv("OPENAI_API_KEY")
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+    answer = response.choices[0].message.content
+    print(answer)
+    result.insert("0.0", answer)
+
+app=ctk.CTk()
+app.geometry("750x550")
+app.title("ChatGPT-Project Idea Generater")
+ctk.set_appearance_mode("System")
+title_label = ctk.CTkLabel(app, text="Project Idea Generater",font=ctk.CTkFont(size=30,weight="bold"))
+title_label.pack(padx=10,pady=(40,20))
+frame=ctk.CTkFrame(app)
+frame.pack(fill="x",padx=100)
+
+language_frame = ctk.CTkFrame(frame)
+language_frame.pack(padx=100,pady=(20,5),fill="both")
+language_label= ctk.CTkLabel(language_frame,text="Programming Language",font=ctk.CTkFont(weight="bold"))
+language_label.pack()
+language_dropdown= ctk.CTkComboBox(language_frame,values=["Python", "Java", "C++", "C", "Javascript"])
+language_dropdown.pack(pady=10)
+level_frame = ctk.CTkFrame(frame)
+level_frame.pack(padx=100,pady=5,fill="both")
+level_label = ctk.CTkLabel(level_frame,text="Project Difficulty", font=ctk.CTkFont(weight="bold"))
+level_label.pack()
+level_value= ctk.StringVar(value="Easy")
+radio_button1 = ctk.CTkRadioButton(level_frame, text= "Easy", variable=level_value, value="Easy")
+radio_button1.pack(side="left",padx=(20,10),pady=10)
+radio_button2 = ctk.CTkRadioButton(level_frame, text= "Medium", variable=level_value, value="Medium")
+radio_button2.pack(side="left",padx=(10),pady=10)
+radio_button3 = ctk.CTkRadioButton(level_frame, text= "Hard", variable=level_value, value="Hard")
+radio_button3.pack(side="left",padx=(10),pady=10)
+
+features_frame = ctk.CTkFrame (frame)
+features_frame.pack (padx=100, pady=5, fill="both")
+features_label = ctk.CTkLabel(features_frame, text="Features", font=ctk.CTkFont (weight="bold"))
+features_label.pack()
+checkbox1 = ctk.CTkCheckBox (features_frame, text="Database")
+checkbox1.pack(side="left", padx=50, pady=10)
+checkbox2 = ctk.CTkCheckBox (features_frame, text="API")
+checkbox2.pack(side="left", padx=50, pady=10)
+
+button = ctk.CTkButton(frame,text="Generate Ideas",command=generate)
+button.pack(padx=100,fill="x", pady=(5,20))
+
+
+result = ctk.CTkTextbox(app,font=ctk.CTkFont(size=15))
+result.pack(padx=10,fill="x", pady=10)
+
+app.mainloop()
+
+
+
